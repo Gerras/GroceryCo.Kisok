@@ -30,7 +30,7 @@ The way I decided to solve the Promotions in a generic enough way to include the
 promotions actually meant mathematically. It is easy enough to do when you have a single item promotion. For each item you reduce it by 
 the sale amount and you are done. For the 'Group' promotion and 'Additional Product Discount' what it really comes down to is you are 
 discounting a certain quantity of items, so if you create the promotion with the sale price and the quantity you can just compare that
-to your basket item for that promotion and compare the total quanttiy to the threshold. While the total quantity is greater than 
+to your basket item for that promotion and compare the total quantity to the threshold. While the total quantity is greater than 
 or equal to the threshold you can take that quantity of the item, multiply it by the regular amount and subtract the discounted price,
 which will get you the difference which you can subtract from the total. You can continue you doing this until the quantity of item in
 the basket falls below the threshold amount.
