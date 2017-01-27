@@ -50,6 +50,15 @@ That being that you can only apply 1 promotion per item. Multiple promotions for
 in the list will be applied.
 
 ##Examples
+An Exmaple user input file would be the following:
+```
+Apple
+Orange
+Banana
+Banana
+Banana
+Apple
+```
 An Example ItemCatalog.csv file would be the following:
 ```
 Id,Name,Price
