@@ -30,10 +30,18 @@ The way I decided to solve the Promotions in a generic enough way to include the
 promotions actually meant mathematically. It is easy enough to do when you have a single item promotion. For each item you reduce it by 
 the sale amount and you are done. For the 'Group' promotion and 'Additional Product Discount' what it really comes down to is you are 
 discounting a certain quantity of items, so if you create the promotion with the sale price and the quantity you can just compare that
-to your basket items and if they meet the threshold quantity you can subtract the difference from the total.
+to your basket item for that promotion and compare the total quanttiy to the threshold. While the total quantity is greater than 
+or equal to the threshold you can take that quantity of the item, multiply it by the regular amount and subtract the discounted price,
+which will get you the difference which you can subtract from the total. You can continue you doing this until the quantity of item in
+the basket falls below the threshold amount.
 
 For example, if you have regular priced apples for $1 and you have a promotion for buy one get one 50% off, what you are saying 
-mathematically is for 2 apples you will pay $1.50, which is a discount of $0.50, which can be taken off the total of the basket.
+mathematically is for 2 apples you will pay $1.50 instead of $2.00, a discount of $0.50. 
+Say you have 5 apples in your basket, at regular price this would be $5. However we have a promotion to apply, and since 5 is 
+above the threshold of 2 we can apply our promotion. So we begin by subtracting 2 from the total quantity, `5 - 2 = 3`, and subtract
+$1.50 from 2 regular priced apples, `2 - 1.5 = .5`. Taking that off $5 our total is now $4.50. Notice that we still have 3 items left
+and since 3 is above our threshold of 2 we can apply the discount again.
+Doing the same thing again we get another $0.50 discount, which removing from the total will give us our final price of $4.00. 
 
 
 ##Limitations
