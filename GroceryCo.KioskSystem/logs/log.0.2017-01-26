@@ -1,0 +1,15 @@
+2017-01-26 20:09:00,421 ERROR [10] System.Object - An error has occured: CsvHelper.CsvMissingFieldException
+CsvHelper.CsvMissingFieldException: Fields 'Price' do not exist in the CSV file.
+   at CsvHelper.CsvReader.GetFieldIndex(String[] names, Int32 index, Boolean isTryGet)
+   at CsvHelper.CsvReader.AddPropertyBindings(CsvPropertyMapCollection properties, List`1 bindings)
+   at CsvHelper.CsvReader.CreatePropertyBindingsForMapping(CsvClassMap mapping, Type recordType, List`1 bindings)
+   at CsvHelper.CsvReader.CreateFuncForObject(Type recordType)
+   at CsvHelper.CsvReader.CreateReadRecordFunc(Type recordType)
+   at CsvHelper.CsvReader.GetReadRecordFunc[T]()
+   at CsvHelper.CsvReader.CreateRecord[T]()
+   at CsvHelper.CsvReader.<GetRecords>d__65`1.MoveNext()
+   at System.Collections.Generic.List`1..ctor(IEnumerable`1 collection)
+   at System.Linq.Enumerable.ToList[TSource](IEnumerable`1 source)
+   at GroceryCo.KioskSystem.DAL.KioskDataStore.GetKioskItems() in C:\Users\kbrauen\Documents\Visual Studio 2015\Projects\GroceryCo.KioskSystem\GroceryCo.KioskSystem.DAL\KioskDataStore.cs:line 31
+   at GroceryCo.KioskSystem.Core.GroceryKiosk.BeginTransaction(String[] userBasket) in C:\Users\kbrauen\Documents\Visual Studio 2015\Projects\GroceryCo.KioskSystem\GroceryCo.KioskSystem.Core\GroceryKiosk.cs:line 31
+   at GroceryCo.KioskSystem.App.Application.Run() in C:\Users\kbrauen\Documents\Visual Studio 2015\Projects\GroceryCo.KioskSystem\GroceryCo.KioskSystem\App\Application.cs:line 40
