@@ -2,7 +2,7 @@
 using GroceryCo.KioskSystem.AppDefinitions;
 using GroceryCo.KioskSystem.Core.Models;
 
-namespace GroceryCo.KioskSystem
+namespace GroceryCo.KioskSystem.App
 {
     public class FormatOutput : IFormatOutput
     {

@@ -2,7 +2,7 @@
 using System.IO;
 using GroceryCo.KioskSystem.AppDefinitions;
 
-namespace GroceryCo.KioskSystem
+namespace GroceryCo.KioskSystem.App
 {
     public class UserInput : IUserInput
     {

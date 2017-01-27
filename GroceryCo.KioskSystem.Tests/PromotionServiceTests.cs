@@ -16,6 +16,7 @@ namespace GroceryCo.KioskSystem.Tests
         private PromotionModel _appleDiscount;
         private PromotionModel _orangeBuyOneGetOneHalfOff;
         private PromotionModel _bananaGroupDiscountOnThree;
+        private PromotionModel _appleGroupDiscount;
 
         [TestInitialize]
         public void Init()
@@ -61,6 +62,14 @@ namespace GroceryCo.KioskSystem.Tests
                 SalePrice = 2,
                 Quantity = 3,
                 Description = "Buy 3 Banana's for $2.00"
+            };
+            _appleGroupDiscount = new PromotionModel
+            {
+                PromotionId = 4,
+                ItemId = 1,
+                SalePrice = 1.5M,
+                Description = "Buy an apple ge the second free.",
+                Quantity = 2,
             };
         }
 
@@ -192,6 +201,31 @@ namespace GroceryCo.KioskSystem.Tests
             Assert.AreEqual(3, basket.Basket[2].Discount.ThresholdQuantity);
             Assert.AreEqual(1, basket.Basket[2].Discount.DiscountAmount);
             Assert.AreEqual(1, basket.Basket[2].Discount.TotalDiscountAmount);
+        }
+
+        [TestMethod]
+        public void TestIfMultiplePromotionsAddedForSameItemOnlyFirstIsTaken()
+        {
+            List<PromotionModel> promotions = new List<PromotionModel> { _appleDiscount, _appleGroupDiscount};
+
+            BasketItemModel appleBasketItem = new BasketItemModel(_apple);
+
+            BasketModel basket = new BasketModel();
+            basket.AddOrUpdateBasket(appleBasketItem);
+            basket.AddOrUpdateBasket(appleBasketItem);
+
+            IPromotionService promotionService = new PromotionService();
+            promotionService.ApplyPromotionsToBasket(basket, promotions);
+
+            Assert.AreEqual(1, basket.Basket.Count);
+            Assert.AreEqual(2, basket.Total);
+
+            Assert.IsTrue(basket.Basket[0].Discount != null);
+            Assert.AreEqual("Apple", basket.Basket[0].ItemName);
+            Assert.AreEqual(2, basket.Basket[0].ItemQuantity);
+            Assert.AreEqual(1, basket.Basket[0].Discount.ThresholdQuantity);
+            Assert.AreEqual(.5M, basket.Basket[0].Discount.DiscountAmount);
+            Assert.AreEqual(1, basket.Basket[0].Discount.TotalDiscountAmount);
         }
     }
 }

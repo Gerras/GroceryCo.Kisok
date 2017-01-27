@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GroceryKiosk.cs" />
+    <Compile Include="Helpers\GroceryKioskHelper.cs" />
     <Compile Include="KioskDefinitions\IGroceryKiosk.cs" />
     <Compile Include="KioskDefinitions\IPromotionService.cs" />
     <Compile Include="Models\BasketItemModel.cs" />

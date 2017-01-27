@@ -18,6 +18,10 @@ namespace GroceryCo.KioskSystem.Core.Models
         public void SubtractFromTotal(decimal discountAmount)
         {
             Total -= discountAmount;
+            if (Total < 0)
+            {
+                Total = 0;
+            }
         }
 
         /// <summary>

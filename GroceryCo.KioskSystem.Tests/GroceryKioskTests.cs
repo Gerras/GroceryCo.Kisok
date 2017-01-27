@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using GroceryCo.KioskSystem.Core.Helpers;
 using GroceryCo.KioskSystem.Core.KioskDefinitions;
 using GroceryCo.KioskSystem.Core.Models;
 using GroceryCo.KioskSystem.DAL;
@@ -13,61 +14,69 @@ namespace GroceryCo.KioskSystem.Tests
     [TestClass]
     public class GroceryKioskTests
     {
-        private Mock<IKioskDataStore> _dataStore;
-        private Mock<IPromotionService> _promotionService;
-        private List<ItemModel> _kioskItems;
-
+        private ItemModel _apple;
+        private ItemModel _orange;
+        private ItemModel _banana;
+        private List<ItemModel> _itemList;
         [TestInitialize]
         public void Init()
         {
-            _dataStore = new Mock<IKioskDataStore>();
-            _promotionService = new Mock<IPromotionService>();
-            _kioskItems = new List<ItemModel>
+            _apple = new ItemModel
             {
-                new ItemModel
-                {
-                    ItemId = 1,
-                    ItemName = "Apple",
-                    ItemPrice = 1
-                },
-                new ItemModel
-                {
-                    ItemId = 2,
-                    ItemName = "Orange",
-                    ItemPrice = 2,
-                },
-                new ItemModel
-                {
-                    ItemId = 3,
-                    ItemName = "Banana",
-                    ItemPrice = 2
-                }
+                ItemName = "Apple",
+                ItemId = 1,
+                ItemPrice = 1.5M
             };
-
+            _orange = new ItemModel
+            {
+                ItemName = "Orange",
+                ItemId = 2,
+                ItemPrice = 2
+            };
+            _banana = new ItemModel
+            {
+                ItemName = "Banana",
+                ItemId = 3,
+                ItemPrice = 1
+            };
+            _itemList = new List<ItemModel> {_apple, _orange, _banana};
         }
 
-        //[TestMethod]
-        //public void TestKioskTransactionNoPromotionsOneItemEach()
-        //{
-        //    _dataStore.Setup(x => x.GetKioskItems()).Returns(_kioskItems);
-        //    _dataStore.Setup(x => x.GetKioskPromotions()).Returns(new List<PromotionModel>());
-        //    string[] testBasket = {"Apple", "Orange", "Banana"};
-        //    GroceryKiosk kisok = new GroceryKiosk(_dataStore.Object, _promotionService.Object);
-        //    BasketModel basket = kisok.BeginTransaction(testBasket);
-        //    List<BasketItemModel> basketItems = new List<BasketItemModel>
-        //    {
-        //        new BasketItemModel(_kioskItems[0]),
-        //        new BasketItemModel(_kioskItems[1]),
-        //        new BasketItemModel(_kioskItems[2])
-        //    };
-        //    for (int i = 0; i < basketItems.Count; i++)
-        //    {
-        //        Assert.AreEqual(basketItems[i].ItemName, basket.Basket[i].ItemName);
-        //        Assert.IsTrue(basketItems[i].Discount == null && basket.Basket[i].Discount == null);
-        //        Assert.AreEqual(basketItems[i].ItemId, basket.Basket[i].ItemId);
-        //        Assert.AreEqual(basketItems[i].ItemPrice, basket.Basket[i].ItemPrice);
-        //        Assert.AreEqual(basketItems[i].ItemQuantity, basket.Basket[i].ItemQuantity);
-        //    }
-        //}
+        [TestMethod]
+        public void TestAddingOneItemToBasket()
+        {
+            string[] stringBasket = {"Apple"};
+            BasketModel basket = GroceryKioskHelper.GetItemAndAddOrUpdateBasket(stringBasket, _itemList);
+            Assert.AreEqual(1, basket.Basket.Count);
+            Assert.AreEqual(1.5M, basket.Total);
+        }
+
+        [TestMethod]
+        public void TestAddingMultipleItemsToBasket()
+        {
+            string[] stringBasket = { "Apple", "Orange", "Banana" };
+            BasketModel basket = GroceryKioskHelper.GetItemAndAddOrUpdateBasket(stringBasket, _itemList);
+            Assert.AreEqual(3, basket.Basket.Count);
+            Assert.AreEqual(4.5M, basket.Total);
+        }
+
+        [TestMethod]
+        public void TestAddingMultipleItemsToBasketIgnoreCase()
+        {
+            string[] stringBasket = { "apple", "orange", "banana" };
+            BasketModel basket = GroceryKioskHelper.GetItemAndAddOrUpdateBasket(stringBasket, _itemList);
+            Assert.AreEqual(3, basket.Basket.Count);
+            Assert.AreEqual(4.5M, basket.Total);
+        }
+
+
+        [TestMethod]
+        public void TestIgnoreUnknownBasketItems()
+        {
+            string[] stringBasket = { "apple", "orange", "banana", "motorcycle" };
+            BasketModel basket = GroceryKioskHelper.GetItemAndAddOrUpdateBasket(stringBasket, _itemList);
+            Assert.AreEqual(3, basket.Basket.Count);
+            Assert.AreEqual(4.5M, basket.Total);
+        }
     }
 }

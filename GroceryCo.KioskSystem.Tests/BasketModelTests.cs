@@ -106,5 +106,17 @@ namespace GroceryCo.KioskSystem.Tests
             basket.SubtractFromTotal(1);
             Assert.AreEqual(1, basket.Total);
         }
+
+        [TestMethod]
+        public void TestBasketSubtractFromTotalLessThanZero()
+        {
+            BasketItemModel basketItemApple = new BasketItemModel(_apple);
+            BasketModel basket = new BasketModel();
+            basket.AddOrUpdateBasket(basketItemApple);
+            basket.AddOrUpdateBasket(basketItemApple);
+            Assert.AreEqual(2, basket.Total);
+            basket.SubtractFromTotal(3);
+            Assert.AreEqual(0, basket.Total);
+        }
     }
 }

@@ -21,9 +21,6 @@ namespace GroceryCo.KioskSystem.App
             _logger = logger;
         }
 
-        /// <summary>
-        /// Runs the console application.
-        /// </summary>
         public void Run()
         {
             try

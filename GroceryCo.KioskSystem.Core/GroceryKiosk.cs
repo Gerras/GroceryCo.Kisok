@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using GroceryCo.KioskSystem.Core.Helpers;
 using GroceryCo.KioskSystem.Core.KioskDefinitions;
 using GroceryCo.KioskSystem.Core.Models;
 using GroceryCo.KioskSystem.DAL.DALDefinitions;
@@ -27,34 +26,10 @@ namespace GroceryCo.KioskSystem.Core
         public BasketModel BeginTransaction(string[] userBasket)
         {
 
-            
             List<ItemModel> kioskItems = _dataStore.GetKioskItems();
             List<PromotionModel> kisokPromotions = _dataStore.GetKioskPromotions();
-           var basket = GetItemAndAddOrUpdateBasket(userBasket, kioskItems);
+           var basket = GroceryKioskHelper.GetItemAndAddOrUpdateBasket(userBasket, kioskItems);
             _promotionService.ApplyPromotionsToBasket(basket, kisokPromotions);
-            return basket;
-        }
-
-        /// <summary>
-        /// Takes the user input basket and adds the item to the GroceryKiosk BasketModel.
-        /// </summary>
-        /// <param name="userBasket"></param>
-        /// <param name="kioskItems"></param>
-        /// <returns></returns>
-        private static BasketModel GetItemAndAddOrUpdateBasket(string[] userBasket, List<ItemModel> kioskItems)
-        {
-            BasketModel basket = new BasketModel();
-            foreach (var itemName in userBasket)
-            {
-                ItemModel item =
-                    kioskItems.FirstOrDefault(
-                        x => string.Equals(x.ItemName, itemName, StringComparison.CurrentCultureIgnoreCase));
-                if (item == null) continue;
-
-                BasketItemModel basketItem = new BasketItemModel(item);
-                basket.AddOrUpdateBasket(basketItem);
-            }
-
             return basket;
         }
     }
