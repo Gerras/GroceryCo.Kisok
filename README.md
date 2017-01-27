@@ -25,7 +25,7 @@ I decided to use CSV files to store the information about Kiosk Items and Kiosk 
 CSVHelper. This is mostly because I feel that reinventing the wheel for reading from CSV files is unnecessary and CSVHelper easily 
 extensible, meaning that all you need to provide is a proper mapping file for a CSV file and it will map it to a custom object that you 
 define in code.
-
+####Promotions (Discounts)
 The way I decided to solve the Promotions in a generic enough way to include the **_Advanced Requirements_** was to break down what the 
 promotions actually meant mathematically. It is easy enough to do when you have a single item promotion. For each item you reduce it by 
 the sale amount and you are done. For the 'Group' promotion and 'Additional Product Discount' what it really comes down to is you are 
